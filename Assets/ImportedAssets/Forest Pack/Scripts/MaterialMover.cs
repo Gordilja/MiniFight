@@ -5,15 +5,23 @@ using UnityEngine;
 public class MaterialMover : MonoBehaviour
 {
 
-    public float scrollSpeed = 0.5F;
-    public Renderer rend;
+    public float speed = 0.3f;
+    Renderer _rnd;
+    Material _waterReference;
+
     void Start()
     {
-        rend = GetComponent<Renderer>();
+        _rnd = GetComponent<Renderer>();
+        _waterReference = _rnd.material;
     }
-    void Update()
+
+    private void Update()
     {
-        float offset = Time.time * scrollSpeed;
-        rend.material.SetTextureOffset("_MainTex", new Vector2(0, offset));
+        var currentSpeed = Time.time * speed;
+        _waterReference.mainTextureOffset = new Vector2(0, currentSpeed);
+    }
+    private void LateUpdate()
+    {
+        _rnd.material = _waterReference;
     }
 }

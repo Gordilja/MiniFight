@@ -1,28 +1,27 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerCollision))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerAnimation playerAnimation;
-    [SerializeField] private PlayerCollision playerCollision;
-    [SerializeField] private CharacterController characterController;
-    [SerializeField] private UIDocument uiDoc;
-    [SerializeField] private VisualElement uiElements;
-    public PlayerData playerData;
-    private Vector3 moveDirection;
+    [SerializeField] private PlayerAnimation _PlayerAnimation;
+    [SerializeField] private PlayerCollision _PlayerCollision;
+    [SerializeField] private PlayerHP _PlayerHP;
+    public Rigidbody _Rb;
+    public PlayerData _PlayerData;
+    private Vector3 _moveDirection;
 
     [Header("Movement")]
     public float moveSpeed = 5.0f;
-    public float jumpForce = 7.0f;
-    public float doubleJumpForce = 5.0f;
+    public float jumpForce = 3.0f;
+    public float doubleJumpForce = 1.0f;
     private float charRotation = 180f;
 
     [Header("Movement Limits")]
     public float minX = -33.0f;
     public float maxX = -5.0f;
 
+    public bool isHit = false;
     public bool isGrounded = false;
     public bool isAttacking = false;
     public bool isJumping = false;
@@ -30,25 +29,22 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        playerData = new PlayerData();
-        uiElements = uiDoc.rootVisualElement;
+        _PlayerData = new PlayerData();
+        _Rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        PlayerMovement();
+        if (gameObject.name is "Player" && !isHit)
+            PlayerMovement();
     }
 
     private void PlayerMovement() 
     {
-        isGrounded = characterController.isGrounded;
-        uiElements.Q<ProgressBar>("HP1").value = playerData.health;
         // Movement
         float moveX = Input.GetAxis("Horizontal");
-        moveDirection = new Vector3(moveX * moveSpeed, moveDirection.y, 0f); // Only modify the x-component for movement
-        moveDirection.y += (Physics.gravity.y * 2.5f) * Time.deltaTime; // Apply gravity
-
-        characterController.Move(moveDirection * Time.deltaTime);
+        Vector3 newPosition = transform.position + new Vector3(moveX * moveSpeed * Time.deltaTime, 0f, 0f); // Calculate new position
+        transform.position = newPosition;
 
         // Clamp the X-axis position
         Vector3 clampedPosition = transform.position;
@@ -58,27 +54,29 @@ public class PlayerController : MonoBehaviour
         PlayerAnim(moveX);
 
         // Flip character if moving in the opposite direction
-        if (moveDirection.x < 0)
+        if (moveX < 0)
             transform.rotation = Quaternion.Euler(0, 0, 0);
-        else if (moveDirection.x > 0)
+        else if (moveX > 0)
             transform.rotation = Quaternion.Euler(0, charRotation, 0);
 
-        if (characterController.isGrounded && !isJumping) isJumping = true;
+        if (isGrounded && !isJumping) isJumping = true;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (characterController.isGrounded && isJumping)
+            if (isGrounded && isJumping)
             {
-                // Apply jump force only on the y-component
-                moveDirection.y = jumpForce;
+                _Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                _moveDirection.y = jumpForce;
                 isJumping = false;
                 canDoubleJump = true;
+                isGrounded = false;
             }
             else if (canDoubleJump)
             {
                 // Apply double jump force only on the y-component
-                moveDirection.y = doubleJumpForce;
+                _Rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
                 canDoubleJump = false;
+                isGrounded = false;
             }
         }
 
@@ -88,31 +86,31 @@ public class PlayerController : MonoBehaviour
             Attack();
         }
 
-        if (!Input.GetKey(KeyCode.J) && isAttacking)
+        if (Input.GetKeyDown(KeyCode.S) && !isGrounded)
         {
-            isAttacking = false;
+            _Rb.AddForce(Vector3.down * 35, ForceMode.Impulse);
         }
     }
 
     private void PlayerAnim(float input) 
     {
-        if (input != 0 && characterController.isGrounded && !isAttacking)
+        if (input != 0 && isGrounded && !isAttacking)
         {
-            playerAnimation.RunAnim();
+            _PlayerAnimation.RunAnim();
         }
-        else if (input == 0 && characterController.isGrounded && !isAttacking) 
+        else if (input == 0 && isGrounded && !isAttacking) 
         {
-            playerAnimation.IdleAnim();
+            _PlayerAnimation.IdleAnim();
         }
-        else if(!characterController.isGrounded && !isAttacking)
+        else if(!isGrounded && !isAttacking)
         {
-            playerAnimation.JumpAnim();
+            _PlayerAnimation.JumpAnim();
         }
     }
 
     public void Attack()
     {
         isAttacking = true;
-        playerAnimation.AttackAnim();
+        _PlayerAnimation.AttackAnim();
     }
 }

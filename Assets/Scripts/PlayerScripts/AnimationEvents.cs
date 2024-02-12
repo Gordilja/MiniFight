@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
 {
-    private PlayerAnimation playerAnimation;
+    [SerializeField] private PlayerAnimation _PlayerAnimation;
 
     public void Attack() 
     {
-        playerAnimation.AttackAnimEnd();
+        _PlayerAnimation.AttackAnimEnd();
     }
 }

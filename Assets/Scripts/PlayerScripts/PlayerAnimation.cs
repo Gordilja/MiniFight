@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    [SerializeField] PlayerController _controller;
-    [SerializeField] Animator playerAnimator;
+    [SerializeField] private PlayerController _PlayerController;
+    [SerializeField] private PlayerCollision _PlayerDistanceControl;
+    [SerializeField] private Animator _PlayerAnimator;
+    [SerializeField] private PlayerHP _PlayerHP;
+
     private string currentState;
     const int layer_UPPERBODY = 1;
     const string player_IDLE = "Idle";
@@ -17,43 +18,43 @@ public class PlayerAnimation : MonoBehaviour
 
     public void IdleAnim()
     {    
-        ChangeAnimState(player_IDLE, playerAnimator);
+        ChangeAnimState(player_IDLE, _PlayerAnimator);
         SetLayerWeight(0);
     }
 
     public void RunAnim()
     {
-        ChangeAnimState(player_RUN, playerAnimator);
+        ChangeAnimState(player_RUN, _PlayerAnimator);
         SetLayerWeight(1);
     }
 
     public void JumpAnim()
     {
-        ChangeAnimState(player_JUMP, playerAnimator);
+        ChangeAnimState(player_JUMP, _PlayerAnimator);
         SetLayerWeight(1);
     }
 
     public void AttackAnim()
     {
-        ChangeAnimState(player_ATTACK, playerAnimator);
+        ChangeAnimState(player_ATTACK, _PlayerAnimator);
         SetLayerWeight(0);
     }
 
     public void DieAnim()
     {
-        ChangeAnimState(player_DIE, playerAnimator);
+        ChangeAnimState(player_DIE, _PlayerAnimator);
         SetLayerWeight(0);
     }
 
     public void VictoryAnim()
     {
-        ChangeAnimState(player_VICTORY, playerAnimator);
+        ChangeAnimState(player_VICTORY, _PlayerAnimator);
         SetLayerWeight(0);
     }
 
     private void SetLayerWeight(float weight) 
     {
-        playerAnimator.SetLayerWeight(layer_UPPERBODY, weight);
+        _PlayerAnimator.SetLayerWeight(layer_UPPERBODY, weight);
     }
 
     private void ChangeAnimState(string newState, Animator animator)
@@ -68,8 +69,6 @@ public class PlayerAnimation : MonoBehaviour
 
     public void AttackAnimEnd() 
     {
-        _controller.isAttacking = false;
-        // Do dmg
+        _PlayerController.isAttacking = false;
     }
-
 }

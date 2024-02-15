@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private PlayerController _PlayerController;
-    [SerializeField] private PlayerCollision _PlayerDistanceControl;
+    [SerializeField] private PlayerDistanceControl _PlayerDistanceControl;
     [SerializeField] private Animator _PlayerAnimator;
     [SerializeField] private PlayerHP _PlayerHP;
 
@@ -70,5 +70,6 @@ public class PlayerAnimation : MonoBehaviour
     public void AttackAnimEnd() 
     {
         _PlayerController.isAttacking = false;
+        _PlayerDistanceControl.CheckPlayerDistance();
     }
 }

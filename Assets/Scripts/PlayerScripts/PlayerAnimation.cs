@@ -19,18 +19,30 @@ public class PlayerAnimation : MonoBehaviour
     public void IdleAnim()
     {    
         ChangeAnimState(player_IDLE, _PlayerAnimator);
+        if (_PlayerController.isAttacking)
+        {
+            _PlayerController.isAttacking = false;
+        }
         SetLayerWeight(0);
     }
 
     public void RunAnim()
     {
         ChangeAnimState(player_RUN, _PlayerAnimator);
+        if (_PlayerController.isAttacking)
+        {
+            _PlayerController.isAttacking = false;
+        }
         SetLayerWeight(1);
     }
 
     public void JumpAnim()
     {
         ChangeAnimState(player_JUMP, _PlayerAnimator);
+        if (_PlayerController.isAttacking)
+        {
+            _PlayerController.isAttacking = false;
+        }
         SetLayerWeight(1);
     }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
+    public string userName;
     public int prefabID;
     public int health;
     public int attack;

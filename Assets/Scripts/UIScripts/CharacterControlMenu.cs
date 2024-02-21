@@ -1,15 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterControlMenu : MonoBehaviour
 {
+    public static CharacterControlMenu Instance;
     public List<GameObject> characterList;
     public GameObject selectedCharacter;
+    private Animator animator;
 
     private bool characterClicked = false;
+    private bool loadingStart = false;
+
+    private void Awake()
+    {
+        Instance = this;
+        // Change from game data
+        selectedCharacter = characterList[0];
+        animator = selectedCharacter.GetComponent<Animator>();
+    }
 
     void Update()
+    {
+        if (!GameManager.Instance.startGame)
+        {
+            MenuControls();
+        }
+        else if (GameManager.Instance.startGame && !loadingStart)
+        {
+            animator.Play("Run");
+            selectedCharacter.transform.rotation = Quaternion.Euler(0, 90, 0);
+            loadingStart = true;
+        }
+    }
+
+    private void MenuControls() 
     {
         bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(-1);
 
@@ -22,7 +46,7 @@ public class CharacterControlMenu : MonoBehaviour
                 characterClicked = true;
 
         }
-        else if (Input.GetMouseButtonUp(0) && characterClicked) 
+        else if (Input.GetMouseButtonUp(0) && characterClicked)
             characterClicked = false;
 
         if (!isOverUI && Input.GetMouseButton(0) && characterClicked)
@@ -30,7 +54,7 @@ public class CharacterControlMenu : MonoBehaviour
 
         if (Input.GetKeyDown("1"))
             SwitchActiveChar(0);
-        
+
 
         if (Input.GetKeyDown("2"))
             SwitchActiveChar(1);
@@ -51,6 +75,7 @@ public class CharacterControlMenu : MonoBehaviour
         selectedCharacter.SetActive(false);
         selectedCharacter = characterList[id];
         selectedCharacter.SetActive(true);
+        animator = selectedCharacter.GetComponent<Animator>();
     }
 
     private void ResetCharRotation()

@@ -8,6 +8,13 @@ public class MenuButtonEvents : MonoBehaviour
         SceneManager.LoadScene("Lobby");
     }
 
+    public void StartGame()
+    {
+        UILobby.Instance.TutorialPanel.SetActive(false);
+        UILobby.Instance.LobbyPanel.SetActive(false);
+        GameManager.Instance.startGame = true;
+    }
+
     public void OptionPanel() 
     {
         // Open option panel

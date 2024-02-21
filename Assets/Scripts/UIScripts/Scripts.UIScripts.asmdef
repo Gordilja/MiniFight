@@ -1,7 +1,9 @@
 {
     "name": "Scripts.UIScripts",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:81e4a3483ae6b5d4a921197c199d7299"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [
         "WebGL"

@@ -81,7 +81,6 @@ public class PlayerAnimation : MonoBehaviour
 
     public void AttackAnimEnd() 
     {
-        _PlayerController.isAttacking = false;
         _PlayerDistanceControl.CheckPlayerDistance();
     }
 }

@@ -7,10 +7,12 @@ public class PlayerData
     public int prefabID;
     public int health;
     public int attack;
+    public CharType type;
 
     public PlayerData() 
     {
         health = 100;
         attack = 5;
+        type = CharType.Knight;
     }
 }

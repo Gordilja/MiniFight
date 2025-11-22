@@ -3,69 +3,86 @@ using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
+    [Header("Refs")]
     [SerializeField] private PlayerController _PlayerController;
-    [SerializeField] private PlayerAnimation _PlayerAnimation;
-    [SerializeField] private PlayerDistanceControl _PlayerDistanceControl;
-    [SerializeField] private ParticleSystem _bloodEffect;
-    public int _PlayerHealth;
+    [SerializeField] private ParticleSystem _BloodEffect;
 
     [Header("Health params")]
-    public Image _healthBar;
-    public Color midHealth;
-    public Color lowHealth;
+    private int maxHealth = 100;
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Color midHealth;
+    [SerializeField] private Color lowHealth;
 
-    private float _currentHealth;
+    private int _currentHealth;
+    private Color _fullHealthColor;
 
-    // OnSpawnPlayer later
     private void Start()
     {
-        _PlayerHealth = _PlayerController._PlayerData.health;
-        _healthBar.fillAmount = 1;
-        _currentHealth = 1;
+        int dataHealth = _PlayerController._PlayerData != null
+            ? _PlayerController._PlayerData.health
+            : maxHealth;
+
+        _currentHealth = dataHealth > 0 ? dataHealth : maxHealth;
+        maxHealth = Mathf.Max(maxHealth, _currentHealth);
+
+        if (healthBar)
+        {
+            _fullHealthColor = healthBar.color;
+            healthBar.fillAmount = 1f;
+        }
     }
 
-    public void DealDmg(int damageDealt) 
+    public void DealDmg(int damageDealt)
     {
-        if (!_PlayerController.isAlive) 
+        if (!_PlayerController.IsAlive)
             return;
 
-        _bloodEffect.Play();
-         _PlayerHealth -= damageDealt;
-        _currentHealth = (float)_PlayerHealth / 100;
-        _healthBar.fillAmount = _currentHealth;
-        var opposite = OppositeDir();
-        Debug.Log($"Opposite: {opposite}");
-        _PlayerController._Rb.AddForce(opposite * 40, ForceMode.Impulse);
+        if (damageDealt <= 0)
+            return;
+
+        if (_BloodEffect)
+            _BloodEffect.Play();
+
+        _currentHealth = Mathf.Max(0, _currentHealth - damageDealt);
+
+        float normalized = (float)_currentHealth / maxHealth;
+        if (healthBar)
+        {
+            healthBar.fillAmount = normalized;
+            UpdateHealthBarColor(normalized);
+        }
+
+        ApplyKnockback(GameManager.Instance.EnemyPlayer.transform);
+
         if (_currentHealth <= 0)
         {
-            // isDead tru
-            _PlayerController.isAlive = false;
-            _PlayerAnimation.DieAnim();
+            _PlayerController.IsAlive = false;
+            _PlayerController.PlayerAnimation.PlayDie();
+            // TODO: disable input, send RPC, etc.
         }
-        HealthBarColor();
+
+        _PlayerController.PlayerCollision.SetHit(false);
     }
 
-    private void HealthBarColor() 
+    private void ApplyKnockback(Transform attacker)
     {
-        if (_currentHealth > 0.2f && _currentHealth <= 0.6f)
-        {
-            _healthBar.color = midHealth;
-        }
-        else if (_currentHealth <= 0.2f)
-        {
-            _healthBar.color = lowHealth;
-        }
+        if (!_PlayerController._Rb)
+            return;
+
+        Vector3 dir = (transform.position - attacker.position).normalized;
+        dir.y = 0f;
+        _PlayerController._Rb.AddForce(dir * 40f, ForceMode.Impulse);
     }
 
-    private Vector3 OppositeDir() 
+    private void UpdateHealthBarColor(float normalized)
     {
-        if (_PlayerDistanceControl._enemyPlayer.transform.rotation.y == 0)
-        {
-            return Vector3.left;
-        }
-        else 
-        {
-            return Vector3.right;
-        }
+        if (!healthBar) return;
+
+        if (normalized > 0.6f)
+            healthBar.color = _fullHealthColor;
+        else if (normalized > 0.2f)
+            healthBar.color = midHealth;
+        else
+            healthBar.color = lowHealth;
     }
 }

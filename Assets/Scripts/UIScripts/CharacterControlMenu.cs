@@ -17,15 +17,16 @@ public class CharacterControlMenu : MonoBehaviour
         // Change from game data
         selectedCharacter = characterList[0];
         animator = selectedCharacter.GetComponent<Animator>();
+        animator.Play("Idle");
     }
 
     void Update()
     {
-        if (!GameManager.Instance.startGame)
+        if (!GameManager.Instance.StartGame)
         {
             MenuControls();
         }
-        else if (GameManager.Instance.startGame && !loadingStart)
+        else if (GameManager.Instance.StartGame && !loadingStart)
         {
             animator.Play("Run");
             selectedCharacter.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -51,13 +52,6 @@ public class CharacterControlMenu : MonoBehaviour
 
         if (!isOverUI && Input.GetMouseButton(0) && characterClicked)
             RotateChar();
-
-        if (Input.GetKeyDown("1"))
-            SwitchActiveChar(0);
-
-
-        if (Input.GetKeyDown("2"))
-            SwitchActiveChar(1);
     }
 
     private void RotateChar() 

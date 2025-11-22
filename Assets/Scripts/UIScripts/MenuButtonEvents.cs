@@ -12,7 +12,7 @@ public class MenuButtonEvents : MonoBehaviour
     {
         UILobby.Instance.TutorialPanel.SetActive(false);
         UILobby.Instance.LobbyPanel.SetActive(false);
-        GameManager.Instance.startGame = true;
+        GameManager.Instance.StartGame = true;
     }
 
     public void OptionPanel() 

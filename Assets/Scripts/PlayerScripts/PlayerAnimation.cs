@@ -3,84 +3,79 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private PlayerController _PlayerController;
-    [SerializeField] private PlayerDistanceControl _PlayerDistanceControl;
-    [SerializeField] private Animator _PlayerAnimator;
-    [SerializeField] private PlayerHP _PlayerHP;
+    [SerializeField] private Animator _Anim;
 
-    private string currentState;
-    const int layer_UPPERBODY = 1;
-    const string player_IDLE = "Idle";
-    const string player_RUN = "Run";
-    const string player_JUMP = "Jump";
-    const string player_ATTACK = "Attack";
-    const string player_DIE = "Die";
-    const string player_VICTORY = "Victory";
+    // Animator params
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int GroundedHash = Animator.StringToHash("IsGrounded");
+    private static readonly int BlockingHash = Animator.StringToHash("IsBlocking");
+    private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+    private static readonly int UltTrigger = Animator.StringToHash("Ult");
+    private static readonly int AttackIndexHash = Animator.StringToHash("AttackIndex");
 
-    public void IdleAnim()
-    {    
-        ChangeAnimState(player_IDLE, _PlayerAnimator);
-        if (_PlayerController.isAttacking)
-        {
-            _PlayerController.isAttacking = false;
-        }
-        SetLayerWeight(0);
+    // Clip names for direct play
+    private const string STATE_DIE = "Die";
+    private const string STATE_VICTORY = "Victory";
+    private const string STATE_GETUP = "GetUp";
+
+    public void UpdateLocomotion(float moveInputX, bool isGrounded, bool isBlocking)
+    {
+        _Anim.SetFloat(SpeedHash, Mathf.Abs(moveInputX));
+        _Anim.SetBool(GroundedHash, isGrounded);
+        _Anim.SetBool(BlockingHash, isBlocking);
     }
 
-    public void RunAnim()
+    /// AttackIndex = 0 or 1, Animator graph chooses which clip.
+    public void PlayAttack(int attackIndex)
     {
-        ChangeAnimState(player_RUN, _PlayerAnimator);
-        if (_PlayerController.isAttacking)
-        {
-            _PlayerController.isAttacking = false;
-        }
-        SetLayerWeight(1);
+        _Anim.SetLayerWeight(1, 1);
+        _Anim.SetFloat(AttackIndexHash, attackIndex);
+        _Anim.SetTrigger(AttackTrigger);
     }
 
-    public void JumpAnim()
+    /// <summary>
+    /// Called from Animation Event at the end of both attack clips.
+    /// </summary>
+    public void OnAttackAnimationFinished(int damage)
     {
-        ChangeAnimState(player_JUMP, _PlayerAnimator);
-        if (_PlayerController.isAttacking)
-        {
-            _PlayerController.isAttacking = false;
-        }
-        SetLayerWeight(1);
+        _PlayerController.IsAttacking = false;
     }
 
-    public void AttackAnim()
+    public void PlayUlt()
     {
-        ChangeAnimState(player_ATTACK, _PlayerAnimator);
-        SetLayerWeight(0);
+        _Anim.SetTrigger(UltTrigger);
     }
 
-    public void DieAnim()
+    // ========================
+    // CINEMATIC STATES (direct)
+    // ========================
+
+    public void PlayDie()
     {
-        ChangeAnimState(player_DIE, _PlayerAnimator);
-        SetLayerWeight(0);
+        _PlayerController.IsAlive = false;
+        _Anim.SetLayerWeight(1, 0);
+        _Anim.Play(STATE_DIE);    // or CrossFade if you prefer blend
     }
 
-    public void VictoryAnim()
+    public void PlayVictory()
     {
-        ChangeAnimState(player_VICTORY, _PlayerAnimator);
-        SetLayerWeight(0);
+        // Lock player input however you want (new flag, or reuse something)
+        _Anim.Play(STATE_VICTORY, 0, 0f);
+        // Or: _anim.SetTrigger(VictoryTrigger); if you decide to keep it as a param
     }
 
-    private void SetLayerWeight(float weight) 
+    public void PlayGetUp()
     {
-        _PlayerAnimator.SetLayerWeight(layer_UPPERBODY, weight);
+        // You can call this when you want to re-enable the player
+        _Anim.Play(STATE_GETUP, 0, 0f);
+        // After GetUp animation finishes (animation event),
+        // you can re-enable input / clear IsDead etc.
     }
 
-    private void ChangeAnimState(string newState, Animator animator)
+    // Optional: Animation Event at the end of GetUp
+    public void OnGetUpFinished()
     {
-        if (currentState == newState)
-            return;
-
-        animator.Play(newState);
-
-        currentState = newState;
-    }
-
-    public void AttackAnimEnd() 
-    {
-        _PlayerDistanceControl.CheckPlayerDistance();
+        _PlayerController.IsAlive = true;
+        // Reset to locomotion blend tree automatically via params
     }
 }

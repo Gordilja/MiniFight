@@ -2,7 +2,10 @@
     "name": "Scripts.PlayerScripts",
     "rootNamespace": "",
     "references": [
-        "GUID:982f91595bd8ff44e908047118560f26"
+        "GUID:982f91595bd8ff44e908047118560f26",
+        "GUID:09dcc9c0126b6b34ab2a877b8f2277f5",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:81e4a3483ae6b5d4a921197c199d7299"
     ],
     "includePlatforms": [],
     "excludePlatforms": [

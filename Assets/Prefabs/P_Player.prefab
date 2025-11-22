@@ -122,6 +122,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -260,6 +263,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -414,7 +420,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5656925728264388169}
-  m_Layer: 6
+  - component: {fileID: 4833080863505513846}
+  - component: {fileID: 487989215321539766}
+  m_Layer: 7
   m_Name: weapon_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +445,42 @@ Transform:
   - {fileID: 7463047240857497185}
   m_Father: {fileID: 110676627590009490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4833080863505513846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550022226923511729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 5684039211606113644}
+--- !u!136 &487989215321539766
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550022226923511729}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.096051656
+  m_Height: 1.0471509
+  m_Direction: 1
+  m_Center: {x: -0.0018823836, y: 0.69029546, z: 0.00000004524976}
 --- !u!1 &606693676564319635
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +570,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -672,6 +719,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -755,6 +805,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -936,6 +989,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1044,6 +1100,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1204,6 +1263,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1505,6 +1567,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1635,7 +1700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7033963253979703440}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weapon_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1747,6 +1812,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2070,11 +2138,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7135458595745051452}
-  - component: {fileID: 8350030770414412845}
   - component: {fileID: 5684039211606113644}
   - component: {fileID: 3484690364069339959}
   - component: {fileID: 8525027406990783310}
   - component: {fileID: 1050869787408424215}
+  - component: {fileID: 7515008912565358180}
+  - component: {fileID: 5436420594639235956}
+  - component: {fileID: 1740403900141260136}
   m_Layer: 6
   m_Name: P_Player
   m_TagString: Untagged
@@ -2095,26 +2165,12 @@ Transform:
   m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5327127194868646585}
+  - {fileID: 1813759451879090555}
   - {fileID: 131895509519514540}
+  - {fileID: 5327127194868646585}
   - {fileID: 7563404842756516070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8350030770414412845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4130939062836536552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d7d8c7eb45946345bef178df00d5124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _PlayerController: {fileID: 5684039211606113644}
-  _PlayerHP: {fileID: 3484690364069339959}
-  _enemyPlayer: {fileID: 0}
 --- !u!114 &5684039211606113644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,24 +2183,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2634f006dacb00641b0c3edb09f020e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PlayerAnimation: {fileID: 0}
-  _PlayerCollision: {fileID: 8350030770414412845}
-  _PlayerHP: {fileID: 3484690364069339959}
+  PlayerAnimation: {fileID: 0}
+  PlayerCollision: {fileID: 7515008912565358180}
+  PlayerHP: {fileID: 3484690364069339959}
+  _Characters:
+  - {fileID: 3379374983571384559}
+  - {fileID: 63522185626310574}
   _Rb: {fileID: 1050869787408424215}
+  moveSpeed: 5
+  jumpForce: 12
+  doubleJumpForce: 9
+  minX: -7
+  maxX: 7
   _PlayerData:
     userName: 
     prefabID: 0
     health: 100
     attack: 5
-  moveSpeed: 5
-  jumpForce: 12
-  doubleJumpForce: 9
-  isHit: 0
-  isGrounded: 1
-  isAttacking: 0
-  isJumping: 0
-  canDoubleJump: 1
-  isAlive: 1
+    type: 0
+  IsHit: 0
+  IsGrounded: 0
+  IsAttacking: 0
+  IsJumping: 0
+  CanDoubleJump: 0
+  IsAlive: 1
+  IsBlocking: 0
 --- !u!114 &3484690364069339959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2158,11 +2221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PlayerController: {fileID: 5684039211606113644}
-  _PlayerAnimation: {fileID: 0}
-  _PlayerDistanceControl: {fileID: 8350030770414412845}
-  _bloodEffect: {fileID: 468018969812445866}
-  _PlayerHealth: 0
-  _healthBar: {fileID: 0}
+  _BloodEffect: {fileID: 468018969812445866}
+  healthBar: {fileID: 0}
   midHealth: {r: 0.7735849, g: 0.52049077, b: 0.18609823, a: 1}
   lowHealth: {r: 0.7075472, g: 0.16353686, b: 0.16353686, a: 1}
 --- !u!136 &8525027406990783310
@@ -2215,6 +2275,62 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 2
+--- !u!114 &7515008912565358180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130939062836536552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb423bc6e503424a8a08235761ca6f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerController: {fileID: 5684039211606113644}
+  Sword: {fileID: 0}
+--- !u!114 &5436420594639235956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130939062836536552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69daee4d5e3d8f24081b8e6bd05a30bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  extraDistance: 0.07
+  minGroundNormalY: 0.7
+  _Controller: {fileID: 5684039211606113644}
+  _Col: {fileID: 8525027406990783310}
+--- !u!136 &1740403900141260136
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130939062836536552}
+  m_Material: {fileID: 13400000, guid: d935ca3d47e7dd045a74b5b87737510a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.63179064
+  m_Height: 2.5598245
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.2799122, z: -0.012143016}
 --- !u!1 &4141116749181382968
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,6 +2538,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2510,7 +2629,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7128276473472878367}
-  m_Layer: 6
+  - component: {fileID: 8437429190889677072}
+  - component: {fileID: 6988622081649409903}
+  m_Layer: 7
   m_Name: weapon_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2533,6 +2654,42 @@ Transform:
   - {fileID: 6411920038761417650}
   m_Father: {fileID: 1303276141958141930}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8437429190889677072
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347547558091928253}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.096051656
+  m_Height: 1.0471509
+  m_Direction: 1
+  m_Center: {x: -0.0018823836, y: 0.69029546, z: 0.00000004524976}
+--- !u!114 &6988622081649409903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347547558091928253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 5684039211606113644}
 --- !u!1 &4384116821556670076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,6 +2795,7 @@ GameObject:
   - component: {fileID: 7590757600855144669}
   - component: {fileID: 2473295113812904816}
   - component: {fileID: 6422029849468265840}
+  - component: {fileID: 3379374983571384559}
   m_Layer: 6
   m_Name: MaleCharacterPBR
   m_TagString: Untagged
@@ -2667,7 +2825,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &7590757600855144669
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2681,6 +2839,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -2699,9 +2858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PlayerController: {fileID: 5684039211606113644}
-  _PlayerDistanceControl: {fileID: 8350030770414412845}
-  _PlayerAnimator: {fileID: 7590757600855144669}
-  _PlayerHP: {fileID: 3484690364069339959}
+  _Anim: {fileID: 7590757600855144669}
 --- !u!114 &6422029849468265840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2714,8 +2871,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0646ba877be291140bca35a139e11da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PlayerAnimation: {fileID: 2473295113812904816}
-  _PlayerController: {fileID: 5684039211606113644}
+--- !u!114 &3379374983571384559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4573081287741099105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e2e98c50fdcb542bf6ca3f1a1a5e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharType: 0
+  Animation: {fileID: 2473295113812904816}
+  Sword: {fileID: 4833080863505513846}
 --- !u!1 &4589384599191882267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2765,6 +2935,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2855,7 +3028,7 @@ GameObject:
   - component: {fileID: 850222316518091184}
   - component: {fileID: 3201322113977231935}
   - component: {fileID: 4058087928161530347}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Shield05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2902,6 +3075,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3082,6 +3258,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3222,6 +3401,7 @@ GameObject:
   - component: {fileID: 6589832258584701718}
   - component: {fileID: 8150506255894106897}
   - component: {fileID: 8501939308330490174}
+  - component: {fileID: 63522185626310574}
   m_Layer: 6
   m_Name: FemaleCharacterPBR
   m_TagString: Untagged
@@ -3251,7 +3431,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &6589832258584701718
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3265,6 +3445,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -3283,9 +3464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PlayerController: {fileID: 5684039211606113644}
-  _PlayerDistanceControl: {fileID: 8350030770414412845}
-  _PlayerAnimator: {fileID: 6589832258584701718}
-  _PlayerHP: {fileID: 3484690364069339959}
+  _Anim: {fileID: 6589832258584701718}
 --- !u!114 &8501939308330490174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3298,8 +3477,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0646ba877be291140bca35a139e11da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PlayerAnimation: {fileID: 8150506255894106897}
-  _PlayerController: {fileID: 5684039211606113644}
+--- !u!114 &63522185626310574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5228973027048328944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e2e98c50fdcb542bf6ca3f1a1a5e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharType: 1
+  Animation: {fileID: 8150506255894106897}
+  Sword: {fileID: 6988622081649409903}
 --- !u!1 &5258936837469397819
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,6 +3614,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3505,6 +3700,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3705,7 +3903,7 @@ GameObject:
   - component: {fileID: 8579347935956535787}
   - component: {fileID: 6592656390024268416}
   - component: {fileID: 2713326736330726852}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Shield08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3752,6 +3950,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3867,6 +4068,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3950,6 +4154,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4270,6 +4477,61 @@ Transform:
   - {fileID: 5443232288433632443}
   m_Father: {fileID: 861496797116931987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7076203082530112588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1813759451879090555}
+  - component: {fileID: 2582575014083951023}
+  m_Layer: 6
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1813759451879090555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7076203082530112588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7135458595745051452}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2582575014083951023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7076203082530112588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a707c63638ef34d915ccd494f9da69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Player: {fileID: 5684039211606113644}
+  _MoveAction: {fileID: -480942702965120567, guid: f8aed69e0692cbd4183e539f439ab006,
+    type: 3}
+  _JumpAction: {fileID: 3417637982494165704, guid: f8aed69e0692cbd4183e539f439ab006,
+    type: 3}
+  _AttackAction: {fileID: -5419820983153286615, guid: f8aed69e0692cbd4183e539f439ab006,
+    type: 3}
+  _BlockAction: {fileID: 4620484331685129833, guid: f8aed69e0692cbd4183e539f439ab006,
+    type: 3}
+  _UltAction: {fileID: 7132997327846628586, guid: f8aed69e0692cbd4183e539f439ab006,
+    type: 3}
 --- !u!1 &7229955315269947513
 GameObject:
   m_ObjectHideFlags: 0
@@ -4319,6 +4581,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4520,6 +4785,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4635,6 +4903,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4671,9 +4942,8 @@ GameObject:
   - component: {fileID: 6411920038761417650}
   - component: {fileID: 4422419954588039035}
   - component: {fileID: 978751112655485480}
-  - component: {fileID: 9104448837194630767}
   - component: {fileID: 3983117165368810225}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: OHS06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4720,6 +4990,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4745,18 +5018,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9104448837194630767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376527805453782232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &3983117165368810225
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4923,6 +5184,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5060,6 +5324,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5128,7 +5395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3304589581121944776}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weapon_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5392,6 +5659,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5624,6 +5894,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5739,6 +6012,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5822,6 +6098,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5921,8 +6200,7 @@ GameObject:
   - component: {fileID: 7463047240857497185}
   - component: {fileID: 5377328400539465916}
   - component: {fileID: 6137351284015389339}
-  - component: {fileID: 6316871714377624208}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: OHS03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5969,6 +6247,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5994,18 +6275,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6316871714377624208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9137866593704428796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8428263304304391379
 PrefabInstance:
   m_ObjectHideFlags: 0

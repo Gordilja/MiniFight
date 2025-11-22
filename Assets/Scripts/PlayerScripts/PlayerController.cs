@@ -1,125 +1,157 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-[RequireComponent(typeof(PlayerDistanceControl))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerCollision))]
+[RequireComponent(typeof(PlayerHP))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerAnimation _PlayerAnimation;
-    [SerializeField] private PlayerDistanceControl _PlayerCollision;
-    [SerializeField] private PlayerHP _PlayerHP;
-    public Rigidbody _Rb;
-    public PlayerData _PlayerData;
-    private Vector3 _moveDirection;
+    [Header("Refs")]
+    public PlayerAnimation PlayerAnimation;
+    public PlayerCollision PlayerCollision;
+    public PlayerHP PlayerHP;
+    [SerializeField] private List<Character> _Characters;
+    [SerializeField] public Rigidbody _Rb;
 
     [Header("Movement")]
-    public float moveSpeed = 5.0f;
-    public float jumpForce = 3.0f;
-    public float doubleJumpForce = 1.0f;
-    private float charRotationRight = 180f;
-    private float charRotationLeft = 0f;
+    [SerializeField] private float moveSpeed = 5.0f;
+    [SerializeField] private float jumpForce = 3.0f;
+    [SerializeField] private float doubleJumpForce = 1.0f;
 
     [Header("Movement Limits")]
-    private const float minX = -7f;
-    private const float maxX = 7f;
+    [SerializeField] private float minX = -7f;
+    [SerializeField] private float maxX = 7f;
 
-    public bool isHit = false;
-    public bool isGrounded = false;
-    public bool isAttacking = false;
-    public bool isJumping = false;
-    public bool canDoubleJump = false;
-    public bool isAlive = true;
+    private const float charRotationRight = 180f;
+    private const float charRotationLeft = 0f;
 
-    private void Start()
+    public PlayerData _PlayerData;
+
+    // State
+    public bool IsHit = false;
+    public bool IsGrounded = false;
+    public bool IsAttacking = false;
+    public bool IsJumping = false;
+    public bool CanDoubleJump = false;
+    public bool IsAlive = true;
+    public bool IsBlocking = false; // TODO: later add facing check in collision
+
+    // Input cache
+    private float _moveInputX;
+
+    private void Awake()
     {
-        _PlayerData = new PlayerData();
+        for (int i = 0; i < _Characters.Count; i++)
+        {
+            if (i == (int)_PlayerData.type)
+            {
+                _Characters[i].gameObject.SetActive(true);
+                PlayerAnimation = _Characters[i].Animation;
+                PlayerCollision.Sword = _Characters[i].Sword;
+            }
+            else 
+            {
+                _Characters[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     private void Update()
     {
-        if (gameObject.name is "Player" && !isHit && isAlive)
-            PlayerMovement();
+        if (!IsAlive || IsHit)
+            return;
+
+        HandleHorizontalMovement();
+        PlayerAnimation.UpdateLocomotion(_moveInputX, IsGrounded, IsBlocking);
     }
 
-    private void PlayerMovement() 
+    private void FixedUpdate()
     {
-        // Movement
-        float moveX = Input.GetAxis("Horizontal");
-        Vector3 newPosition = transform.position + new Vector3(moveX * moveSpeed * Time.deltaTime, 0f, 0f); // Calculate new position
-        transform.position = newPosition;
-
-        // Clamp the X-axis position
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
-        transform.position = clampedPosition;
-
-        PlayerAnim(moveX);
-
-        // Flip character if moving in the opposite direction
-        if (moveX < 0)
-            transform.rotation = Quaternion.Euler(0, charRotationLeft, 0);
-        else if (moveX > 0)
-            transform.rotation = Quaternion.Euler(0, charRotationRight, 0);
-
-        if (isGrounded && !isJumping) isJumping = true;
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!IsGrounded && _Rb.linearVelocity.y < 0f)
         {
-            if (isGrounded && isJumping)
-            {
-                _Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                _moveDirection.y = jumpForce;
-                isJumping = false;
-                canDoubleJump = true;
-                isGrounded = false;
-            }
-            else if (canDoubleJump)
-            {
-                // Apply double jump force only on the y-component
-                _Rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
-                canDoubleJump = false;
-                isGrounded = false;
-            }
-        }
-
-        // Attacking
-        if (Input.GetKeyDown(KeyCode.J) && !isAttacking)
-        {
-            Attack();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S) && !isGrounded)
-        {
-            _Rb.AddForce(Vector3.down * 35, ForceMode.Impulse);
+            // Apply extra gravity when falling
+            _Rb.AddForce(Vector3.down * 30f, ForceMode.Acceleration);
         }
     }
 
-    private void PlayerAnim(float input) 
+    private void HandleHorizontalMovement()
     {
-        if (input != 0 && isGrounded && !isAttacking)
+        var pos = transform.position;
+        pos.x += _moveInputX * moveSpeed * Time.deltaTime;
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        transform.position = pos;
+
+        if (_moveInputX < -0.01f)
+            transform.rotation = Quaternion.Euler(0f, charRotationLeft, 0f);
+        else if (_moveInputX > 0.01f)
+            transform.rotation = Quaternion.Euler(0f, charRotationRight, 0f);
+    }
+
+    public void SetGrounded(bool grounded)
+    {
+        IsGrounded = grounded;
+        if (grounded && IsJumping) 
         {
-            _PlayerAnimation.RunAnim();
-        }
-        else if (input == 0 && isGrounded && !isAttacking) 
-        {
-            _PlayerAnimation.IdleAnim();
-        }
-        else if(!isGrounded && !isAttacking)
-        {
-            _PlayerAnimation.JumpAnim();
+            IsJumping = false;
         }
     }
 
-    public void Attack()
+    // --------- called from InputManager ---------
+
+    public void SetMoveInput(float value)
     {
-        isAttacking = true;
-        _PlayerAnimation.AttackAnim();
+        _moveInputX = value;
     }
 
-    private IEnumerator StaggerTimer()
+    public void OnJumpInput()
     {
-        yield return new WaitForSeconds(2.0f);
-        isHit = false;
-        Debug.Log("Stagger done");
+        if (!IsAlive)
+            return;
+
+        if (IsGrounded && !IsJumping)
+        {
+            _Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            IsJumping = true;
+            CanDoubleJump = true;
+            IsGrounded = false;
+        }
+        else if (CanDoubleJump)
+        {
+            _Rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
+            CanDoubleJump = false;
+            IsGrounded = false;
+        }
+    }
+
+    public void OnUltInput()
+    {
+        if (!IsAlive)
+            return;
+
+        IsAttacking = true;
+        PlayerAnimation.PlayUlt();
+    }
+
+    public void OnAttackInput()
+    {
+        if (!IsAlive || IsAttacking)
+            return;
+
+        IsAttacking = true;
+        int attackIndex = Random.value > 0.5f ? 0 : 1;
+        PlayerAnimation.PlayAttack(attackIndex);
+    }
+
+    public void OnDownSlamInput()
+    {
+        if (!IsAlive || IsGrounded)
+            return;
+
+        _Rb.AddForce(Vector3.down * 35f, ForceMode.Impulse);
+    }
+
+    public void SetBlockInput(bool pressed)
+    {
+        IsBlocking = pressed; // TODO: collision side check will decide if block succeeds
     }
 }

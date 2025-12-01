@@ -5729,7 +5729,6 @@ GameObject:
   - component: {fileID: 1480032034}
   - component: {fileID: 1480032038}
   - component: {fileID: 1480032037}
-  - component: {fileID: 1480032036}
   - component: {fileID: 1480032035}
   m_Layer: 6
   m_Name: OHS06
@@ -5776,19 +5775,6 @@ CapsuleCollider:
   m_Height: 0.8100125
   m_Direction: 1
   m_Center: {x: 0.00000042188702, y: 0.8024577, z: 0.00000018249072}
---- !u!114 &1480032036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480032033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
 --- !u!23 &1480032037
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5971,7 +5957,6 @@ GameObject:
   - component: {fileID: 1512173285}
   - component: {fileID: 1512173288}
   - component: {fileID: 1512173287}
-  - component: {fileID: 1512173286}
   m_Layer: 6
   m_Name: OHS03
   m_TagString: Untagged
@@ -5994,19 +5979,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1876602009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1512173286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512173284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
 --- !u!23 &1512173287
 MeshRenderer:
   m_ObjectHideFlags: 0

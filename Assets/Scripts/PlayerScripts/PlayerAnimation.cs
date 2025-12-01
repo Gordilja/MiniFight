@@ -28,6 +28,7 @@ public class PlayerAnimation : MonoBehaviour
     /// AttackIndex = 0 or 1, Animator graph chooses which clip.
     public void PlayAttack(int attackIndex)
     {
+        _PlayerController.AttackController.EnableHitbox();
         _Anim.SetLayerWeight(1, 1);
         _Anim.SetFloat(AttackIndexHash, attackIndex);
         _Anim.SetTrigger(AttackTrigger);
@@ -36,13 +37,15 @@ public class PlayerAnimation : MonoBehaviour
     /// <summary>
     /// Called from Animation Event at the end of both attack clips.
     /// </summary>
-    public void OnAttackAnimationFinished(int damage)
+    public void OnAttackAnimationFinished()
     {
         _PlayerController.IsAttacking = false;
+        _PlayerController.AttackController.DisableHitbox();
     }
 
     public void PlayUlt()
     {
+        _PlayerController.AttackController.EnableHitbox(true);
         _Anim.SetTrigger(UltTrigger);
     }
 

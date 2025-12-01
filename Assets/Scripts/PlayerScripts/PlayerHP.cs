@@ -4,85 +4,83 @@ using UnityEngine.UI;
 public class PlayerHP : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private PlayerController _PlayerController;
-    [SerializeField] private ParticleSystem _BloodEffect;
+    [SerializeField] private PlayerController _controller;
+    [SerializeField] private PlayerAnimation _anim;
+    [SerializeField] private ParticleSystem _bloodEffect;
 
     [Header("Health params")]
-    private int maxHealth = 100;
-    [SerializeField] private Image healthBar;
+    [SerializeField] private Image _healthBar;
     [SerializeField] private Color midHealth;
     [SerializeField] private Color lowHealth;
 
+    private int maxHealth = 100;
     private int _currentHealth;
-    private Color _fullHealthColor;
+    private Color _fullColor;
+
+    public void Init(PlayerController c)
+    {
+        _controller = c;
+    }
+
+    private void Awake()
+    {
+        if (!_controller) _controller = GetComponent<PlayerController>();
+        if (!_anim) _anim = GetComponent<PlayerAnimation>();
+    }
 
     private void Start()
     {
-        int dataHealth = _PlayerController._PlayerData != null
-            ? _PlayerController._PlayerData.health
-            : maxHealth;
+        _currentHealth = maxHealth;
 
-        _currentHealth = dataHealth > 0 ? dataHealth : maxHealth;
-        maxHealth = Mathf.Max(maxHealth, _currentHealth);
-
-        if (healthBar)
+        if (_healthBar)
         {
-            _fullHealthColor = healthBar.color;
-            healthBar.fillAmount = 1f;
+            _fullColor = _healthBar.color;
+            _healthBar.fillAmount = 1;
         }
     }
 
-    public void DealDmg(int damageDealt)
+    public void DealDamage(int dmg, PlayerController attacker, float knockback, bool isUlt)
     {
-        if (!_PlayerController.IsAlive)
+        if (!_controller.IsAlive)
             return;
 
-        if (damageDealt <= 0)
-            return;
+        if (_bloodEffect) _bloodEffect.Play();
 
-        if (_BloodEffect)
-            _BloodEffect.Play();
+        _currentHealth = Mathf.Max(0, _currentHealth - dmg);
+        UpdateBar();
 
-        _currentHealth = Mathf.Max(0, _currentHealth - damageDealt);
-
-        float normalized = (float)_currentHealth / maxHealth;
-        if (healthBar)
-        {
-            healthBar.fillAmount = normalized;
-            UpdateHealthBarColor(normalized);
-        }
-
-        ApplyKnockback(GameManager.Instance.EnemyPlayer.transform);
+        if(isUlt)
+            ApplyKnockback(attacker, knockback);
 
         if (_currentHealth <= 0)
-        {
-            _PlayerController.IsAlive = false;
-            _PlayerController.PlayerAnimation.PlayDie();
-            // TODO: disable input, send RPC, etc.
-        }
-
-        _PlayerController.PlayerCollision.SetHit(false);
+            Die();
     }
 
-    private void ApplyKnockback(Transform attacker)
+    private void ApplyKnockback(PlayerController attacker, float force)
     {
-        if (!_PlayerController._Rb)
-            return;
-
-        Vector3 dir = (transform.position - attacker.position).normalized;
-        dir.y = 0f;
-        _PlayerController._Rb.AddForce(dir * 40f, ForceMode.Impulse);
+        Vector3 dir = (transform.position - attacker.transform.position).normalized;
+        dir.y = 0;
+        _controller._Rb.AddForce(dir * force, ForceMode.Impulse);
     }
 
-    private void UpdateHealthBarColor(float normalized)
+    private void UpdateBar()
     {
-        if (!healthBar) return;
+        if (!_healthBar) return;
+
+        float normalized = (float)_currentHealth / maxHealth;
+        _healthBar.fillAmount = normalized;
 
         if (normalized > 0.6f)
-            healthBar.color = _fullHealthColor;
+            _healthBar.color = _fullColor;
         else if (normalized > 0.2f)
-            healthBar.color = midHealth;
+            _healthBar.color = midHealth;
         else
-            healthBar.color = lowHealth;
+            _healthBar.color = lowHealth;
+    }
+
+    private void Die()
+    {
+        _controller.IsAlive = false;
+        _anim.PlayDie();
     }
 }

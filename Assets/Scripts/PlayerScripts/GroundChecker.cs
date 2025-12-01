@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(Collider))]
 public class GroundChecker : MonoBehaviour
 {

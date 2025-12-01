@@ -6633,19 +6633,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6684686625716742169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8484490371160540789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
 --- !u!23 &6707897692098691541
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7232,7 +7219,6 @@ GameObject:
   - component: {fileID: 6022853148673247547}
   - component: {fileID: 3905001093662766578}
   - component: {fileID: 503267058261129377}
-  - component: {fileID: 8446414997560624358}
   - component: {fileID: 4334734156853926008}
   m_Layer: 6
   m_Name: OHS06
@@ -7557,19 +7543,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8446414997560624358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867927904805129809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789c926ae56b2074daa138d158ea55f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
 --- !u!4 &8470330346120398064
 Transform:
   m_ObjectHideFlags: 0
@@ -7596,7 +7569,6 @@ GameObject:
   - component: {fileID: 7853397754936257768}
   - component: {fileID: 4741962728213609013}
   - component: {fileID: 6792147539233609746}
-  - component: {fileID: 6684686625716742169}
   m_Layer: 6
   m_Name: OHS03
   m_TagString: Untagged

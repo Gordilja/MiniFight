@@ -1,16 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerCollision))]
-[RequireComponent(typeof(PlayerHP))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Refs")]
-    public PlayerAnimation PlayerAnimation;
-    public PlayerCollision PlayerCollision;
-    public PlayerHP PlayerHP;
-    [SerializeField] private List<Character> _Characters;
+    public AttackController AttackController;
+    public PlayerAnimation Animation;
+    public PlayerHP HP;
     [SerializeField] public Rigidbody _Rb;
 
     [Header("Movement")]
@@ -39,30 +35,13 @@ public class PlayerController : MonoBehaviour
     // Input cache
     private float _moveInputX;
 
-    private void Awake()
-    {
-        for (int i = 0; i < _Characters.Count; i++)
-        {
-            if (i == (int)_PlayerData.type)
-            {
-                _Characters[i].gameObject.SetActive(true);
-                PlayerAnimation = _Characters[i].Animation;
-                PlayerCollision.Sword = _Characters[i].Sword;
-            }
-            else 
-            {
-                _Characters[i].gameObject.SetActive(false);
-            }
-        }
-    }
-
     private void Update()
     {
         if (!IsAlive || IsHit)
             return;
 
         HandleHorizontalMovement();
-        PlayerAnimation.UpdateLocomotion(_moveInputX, IsGrounded, IsBlocking);
+        Animation.UpdateLocomotion(_moveInputX, IsGrounded, IsBlocking);
     }
 
     private void FixedUpdate()
@@ -129,7 +108,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         IsAttacking = true;
-        PlayerAnimation.PlayUlt();
+        Animation.PlayUlt();
     }
 
     public void OnAttackInput()
@@ -139,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
         IsAttacking = true;
         int attackIndex = Random.value > 0.5f ? 0 : 1;
-        PlayerAnimation.PlayAttack(attackIndex);
+        Animation.PlayAttack(attackIndex);
     }
 
     public void OnDownSlamInput()

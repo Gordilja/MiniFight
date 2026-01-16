@@ -32,6 +32,7 @@ public class SimpleFighterAI : MonoBehaviour
     [SerializeField] private float blockTriggerRange = 2.8f;
 
     private PlayerController _controller;
+    private PlayerStateMachine _state;
 
     private float _nextAttackTime;
     private bool _isBlocking;
@@ -41,6 +42,7 @@ public class SimpleFighterAI : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<PlayerController>();
+        _state = _controller.State;
     }
 
     private void Start()
@@ -55,7 +57,7 @@ public class SimpleFighterAI : MonoBehaviour
 
     private void Update()
     {
-        if (!_controller.IsAlive)
+        if (!_state.IsAlive)
         {
             _controller.SetMoveInput(0f);
             _controller.SetBlockInput(false);
@@ -80,7 +82,7 @@ public class SimpleFighterAI : MonoBehaviour
             return;
         }
 
-        if (_controller.IsAttacking)
+        if (_state.Action != PlayerStateMachine.ActionState.Normal)
         {
             _controller.SetMoveInput(0f);
             return;
@@ -106,7 +108,7 @@ public class SimpleFighterAI : MonoBehaviour
 
         _controller.SetMoveInput(moveInput);
 
-        TryJump(dist, dx);
+        TryJump(dist);
 
         if (useBlocking && Time.time >= _nextBlockTime && dist < blockTriggerRange)
         {
@@ -123,21 +125,16 @@ public class SimpleFighterAI : MonoBehaviour
             TryAttack();
     }
 
-    // -------------------------
-    // JUMP DECISION LOGIC
-    // -------------------------
-    private void TryJump(float dist, float dx)
+    private void TryJump(float dist)
     {
         if (Time.time < _nextJumpTime)
             return;
 
         bool shouldJump = false;
 
-        // Random chance to jump while approaching
         if (dist > attackRange && Random.value < jumpChance)
             shouldJump = true;
 
-        // Jump to escape when too close
         if (dist < retreatRange && Random.value < (jumpChance * 0.5f))
             shouldJump = true;
 
@@ -148,22 +145,18 @@ public class SimpleFighterAI : MonoBehaviour
 
         _controller.OnJumpInput();
 
-        // Jump-in attack if close enough
         if (Random.value < jumpAttackChance)
-            Invoke(nameof(PerformJumpAttack), 0.15f); // small delay so it's mid-air
+            Invoke(nameof(PerformJumpAttack), 0.15f);
     }
 
     private void PerformJumpAttack()
     {
-        if (_controller.IsGrounded)
-            return;
+        if (_state.IsGrounded) return;
+        if (_state.Action != PlayerStateMachine.ActionState.Normal) return;
 
         _controller.OnAttackInput();
     }
 
-    // -------------------------
-    // ATTACK LOGIC
-    // -------------------------
     private void TryAttack()
     {
         bool useUlt = Random.value < ultChance;
@@ -181,9 +174,6 @@ public class SimpleFighterAI : MonoBehaviour
         _nextAttackTime = Time.time + Random.Range(minAttackCooldown, maxAttackCooldown);
     }
 
-    // -------------------------
-    // BLOCK LOGIC
-    // -------------------------
     private void StartBlock()
     {
         _isBlocking = true;

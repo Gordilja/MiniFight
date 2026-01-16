@@ -41,7 +41,7 @@ public class PlayerHP : MonoBehaviour
 
     public void DealDamage(int dmg, PlayerController attacker, float knockback, bool isUlt)
     {
-        if (!_controller.IsAlive)
+        if (!_controller.State.IsAlive)
             return;
 
         if (_bloodEffect) _bloodEffect.Play();
@@ -80,7 +80,7 @@ public class PlayerHP : MonoBehaviour
 
     private void Die()
     {
-        _controller.IsAlive = false;
+        _controller.State.SetLife(PlayerStateMachine.LifeState.Dead);
         _anim.PlayDie();
     }
 }

@@ -24,7 +24,7 @@ public class Hitbox : MonoBehaviour
             return; // Ignore self-hit
 
         // BLOCK CHECK
-        if (hurtbox.Owner.IsBlocking && IsFacingAttacker(hurtbox.Owner))
+        if (hurtbox.Owner.State.IsBlocking && IsFacingAttacker(hurtbox.Owner))
             return;
 
         // Apply hit through attack controller

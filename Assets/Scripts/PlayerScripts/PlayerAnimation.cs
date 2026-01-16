@@ -39,7 +39,7 @@ public class PlayerAnimation : MonoBehaviour
     /// </summary>
     public void OnAttackAnimationFinished()
     {
-        _PlayerController.IsAttacking = false;
+        _PlayerController.NotifyAttackEnded();
         _PlayerController.AttackController.DisableHitbox();
     }
 
@@ -55,7 +55,6 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlayDie()
     {
-        _PlayerController.IsAlive = false;
         _Anim.SetLayerWeight(1, 0);
         _Anim.Play(STATE_DIE);    // or CrossFade if you prefer blend
     }
@@ -78,7 +77,6 @@ public class PlayerAnimation : MonoBehaviour
     // Optional: Animation Event at the end of GetUp
     public void OnGetUpFinished()
     {
-        _PlayerController.IsAlive = true;
         // Reset to locomotion blend tree automatically via params
     }
 }

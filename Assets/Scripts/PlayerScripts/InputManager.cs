@@ -115,7 +115,7 @@ public class InputManager : MonoBehaviour
 
     private void OnBlockPerformed(InputAction.CallbackContext ctx)
     {
-        if(!_Player.IsBlocking)
+        if(!_Player.State.IsBlocking)
             _Player.SetBlockInput(true);
     }
 

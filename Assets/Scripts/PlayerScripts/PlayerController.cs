@@ -1,13 +1,16 @@
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerStateMachine))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Refs")]
     public AttackController AttackController;
     public PlayerAnimation Animation;
     public PlayerHP HP;
+
     [SerializeField] public Rigidbody _Rb;
+    [SerializeField] public PlayerStateMachine State;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5.0f;
@@ -23,38 +26,39 @@ public class PlayerController : MonoBehaviour
 
     public PlayerData _PlayerData;
 
-    // State
-    public bool IsHit = false;
-    public bool IsGrounded = false;
-    public bool IsAttacking = false;
-    public bool IsJumping = false;
-    public bool CanDoubleJump = false;
-    public bool IsAlive = true;
-    public bool IsBlocking = false; // TODO: later add facing check in collision
-
     // Input cache
     private float _moveInputX;
 
+    private void Awake()
+    {
+        if (!_Rb) _Rb = GetComponent<Rigidbody>();
+        if (!State) State = GetComponent<PlayerStateMachine>();
+    }
+
     private void Update()
     {
-        if (!IsAlive || IsHit)
+        if (!State.IsAlive || State.Action == PlayerStateMachine.ActionState.Hitstun)
             return;
 
         HandleHorizontalMovement();
-        Animation.UpdateLocomotion(_moveInputX, IsGrounded, IsBlocking);
+        Animation.UpdateLocomotion(_moveInputX, State.IsGrounded, State.IsBlocking);
     }
 
     private void FixedUpdate()
     {
-        if (!IsGrounded && _Rb.linearVelocity.y < 0f)
+        UpdateLocomotionFromPhysics();
+
+        if (!State.IsGrounded && _Rb.linearVelocity.y < 0f)
         {
-            // Apply extra gravity when falling
             _Rb.AddForce(Vector3.down * 30f, ForceMode.Acceleration);
         }
     }
 
     private void HandleHorizontalMovement()
     {
+        if (!State.CanMove)
+            return;
+
         var pos = transform.position;
         pos.x += _moveInputX * moveSpeed * Time.deltaTime;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
@@ -66,71 +70,113 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, charRotationRight, 0f);
     }
 
-    public void SetGrounded(bool grounded)
+    private void UpdateLocomotionFromPhysics()
     {
-        IsGrounded = grounded;
-        if (grounded && IsJumping) 
-        {
-            IsJumping = false;
-        }
+        if (State.IsGrounded)
+            return;
+
+        float vy = _Rb.linearVelocity.y;
+
+        if (vy > 0.05f)
+            State.SetLocomotion(PlayerStateMachine.LocomotionState.Rising);
+        else if (vy < -0.05f)
+            State.SetLocomotion(PlayerStateMachine.LocomotionState.Falling);
     }
 
-    // --------- called from InputManager ---------
+    // Call this from your ground check / collision
+    public void SetGrounded(bool grounded)
+    {
+        State.SetGrounded(grounded);
+    }
 
+    // -------------------------
+    // INPUT / INTENT API
+    // -------------------------
     public void SetMoveInput(float value)
     {
         _moveInputX = value;
     }
 
-    public void OnJumpInput()
+    public void SetBlockInput(bool pressed)
     {
-        if (!IsAlive)
-            return;
+        State.SetBlocking(pressed);
 
-        if (IsGrounded && !IsJumping)
-        {
-            _Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            IsJumping = true;
-            CanDoubleJump = true;
-            IsGrounded = false;
-        }
-        else if (CanDoubleJump)
-        {
-            _Rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
-            CanDoubleJump = false;
-            IsGrounded = false;
-        }
+        // If block is pressed, stop drift
+        if (State.IsBlocking)
+            _moveInputX = 0f;
     }
 
-    public void OnUltInput()
+    public void OnJumpInput()
     {
-        if (!IsAlive)
+        if (!State.CanJump)
             return;
 
-        IsAttacking = true;
-        Animation.PlayUlt();
+        if (State.IsGrounded)
+        {
+            _Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            State.SetGrounded(false);
+            State.SetLocomotion(PlayerStateMachine.LocomotionState.Rising);
+            State.AllowDoubleJump(true);
+        }
+        else if (State.CanDoubleJump)
+        {
+            _Rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
+            State.SetGrounded(false);
+            State.SetLocomotion(PlayerStateMachine.LocomotionState.Rising);
+            State.AllowDoubleJump(false);
+        }
     }
 
     public void OnAttackInput()
     {
-        if (!IsAlive || IsAttacking)
+        if (!State.CanAttack)
             return;
 
-        IsAttacking = true;
+        State.StartAttack();
         int attackIndex = Random.value > 0.5f ? 0 : 1;
         Animation.PlayAttack(attackIndex);
     }
 
+    public void OnUltInput()
+    {
+        if (!State.CanAttack)
+            return;
+
+        State.StartAttack();
+        Animation.PlayUlt();
+    }
+
     public void OnDownSlamInput()
     {
-        if (!IsAlive || IsGrounded)
+        if (!State.IsAlive || State.IsGrounded)
             return;
 
         _Rb.AddForce(Vector3.down * 35f, ForceMode.Impulse);
     }
 
-    public void SetBlockInput(bool pressed)
+    // -------------------------
+    // Animation / external hooks
+    // -------------------------
+    public void NotifyAttackEnded()
     {
-        IsBlocking = pressed; // TODO: collision side check will decide if block succeeds
+        State.EndAttack();
+    }
+
+    public void EnterHitstun()
+    {
+        State.EnterHitstun();
+        _moveInputX = 0f;
+    }
+
+    public void ExitHitstun()
+    {
+        State.ExitHitstun();
+    }
+
+    public void Kill()
+    {
+        State.SetLife(PlayerStateMachine.LifeState.Dead);
+        _moveInputX = 0f;
+        State.SetBlocking(false);
     }
 }

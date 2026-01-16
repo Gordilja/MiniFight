@@ -2236,6 +2236,7 @@ GameObject:
   - component: {fileID: 7135458595745051452}
   - component: {fileID: 2545578908836676309}
   - component: {fileID: 2249529509575751058}
+  - component: {fileID: 888845857009698142}
   m_Layer: 6
   m_Name: P_Player
   m_TagString: Untagged
@@ -2283,6 +2284,7 @@ MonoBehaviour:
   Animation: {fileID: 2473295113812904816}
   HP: {fileID: 4490326719104749367}
   _Rb: {fileID: 2249529509575751058}
+  State: {fileID: 888845857009698142}
   moveSpeed: 5
   jumpForce: 7
   doubleJumpForce: 4
@@ -2294,13 +2296,6 @@ MonoBehaviour:
     health: 100
     attack: 5
     type: 0
-  IsHit: 0
-  IsGrounded: 0
-  IsAttacking: 0
-  IsJumping: 0
-  CanDoubleJump: 0
-  IsAlive: 1
-  IsBlocking: 0
 --- !u!54 &2249529509575751058
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2328,6 +2323,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 88
   m_CollisionDetection: 0
+--- !u!114 &888845857009698142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130939062836536552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2370aa3e19b154c9776f0676951d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugLogTransitions: 0
 --- !u!1 &4141116749181382968
 GameObject:
   m_ObjectHideFlags: 0

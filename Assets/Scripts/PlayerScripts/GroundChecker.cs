@@ -10,6 +10,21 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private PlayerController _Controller;
     [SerializeField] private Collider _Col;
 
+    private void Awake()
+    {
+        if (_Col == null)
+            _Col = GetComponent<Collider>();
+
+        if (_Controller == null)
+            _Controller = GetComponentInParent<PlayerController>();
+
+        if (_Col == null || _Controller == null)
+        {
+            Debug.LogError("GroundChecker: Missing collider or player controller reference.", this);
+            enabled = false;
+        }
+    }
+
     private void FixedUpdate()
     {
         Bounds b = _Col.bounds;

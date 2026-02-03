@@ -41,14 +41,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!State.IsAlive || State.Action == PlayerStateMachine.ActionState.Hitstun)
             return;
-
-        HandleHorizontalMovement();
+        
         if (Animation)
             Animation.UpdateLocomotion(_moveInputX, State.IsGrounded, State.IsBlocking);
     }
 
     private void FixedUpdate()
     {
+        HandleHorizontalMovement();
         UpdateLocomotionFromPhysics();
 
         if (!State.IsGrounded && _Rb.linearVelocity.y < 0f)
@@ -62,10 +62,10 @@ public class PlayerController : MonoBehaviour
         if (!State.CanMove)
             return;
 
-        var pos = transform.position;
-        pos.x += _moveInputX * moveSpeed * Time.deltaTime;
+        var pos = _Rb.position;
+        pos.x += _moveInputX * moveSpeed * Time.fixedDeltaTime;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        transform.position = pos;
+        _Rb.MovePosition(pos);
 
         if (_moveInputX < -0.01f)
             transform.rotation = Quaternion.Euler(0f, charRotationLeft, 0f);

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AttackController : MonoBehaviour
@@ -40,8 +41,20 @@ public class AttackController : MonoBehaviour
         if (hasHit)
             return;
 
+        if (target == null || target.Owner == null || target.Owner.HP == null)
+            return;
+
         target.Owner.HP.DealDamage(attack.damage, player, attack.knockbackForce, isUlt);
 
+        if (attack != null && attack.hitstun > 0f)
+            StartCoroutine(ApplyHitstun(target.Owner, attack.hitstun));
+
         hasHit = true;
+    }
+    private IEnumerator ApplyHitstun(PlayerController target, float duration)
+    {
+        target.EnterHitstun();
+        yield return new WaitForSeconds(duration);
+        target.ExitHitstun();
     }
 }

@@ -116,6 +116,9 @@ public class PlayerController : MonoBehaviour
 
         if (State.IsGrounded)
         {
+            var velocity = _Rb.linearVelocity;
+            velocity.y = 0f;
+            _Rb.linearVelocity = velocity;
             _Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             State.SetGrounded(false);
             State.SetLocomotion(PlayerStateMachine.LocomotionState.Rising);
@@ -123,6 +126,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (State.CanDoubleJump)
         {
+            var velocity = _Rb.linearVelocity;
+            velocity.y = 0f;
+            _Rb.linearVelocity = velocity;
             _Rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
             State.SetGrounded(false);
             State.SetLocomotion(PlayerStateMachine.LocomotionState.Rising);

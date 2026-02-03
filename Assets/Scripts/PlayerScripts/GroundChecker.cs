@@ -46,6 +46,9 @@ public class GroundChecker : MonoBehaviour
                 grounded = true;
         }
 
+        if (_Controller != null && _Controller._Rb != null && _Controller._Rb.linearVelocity.y > 0.05f)
+            grounded = false;
+
         _Controller.SetGrounded(grounded);
     }
 

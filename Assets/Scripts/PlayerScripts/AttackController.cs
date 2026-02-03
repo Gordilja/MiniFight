@@ -11,6 +11,15 @@ public class AttackController : MonoBehaviour
     private void Awake()
     {
         if (!player) player = GetComponent<PlayerController>();
+        if (!hitbox) hitbox = GetComponentInChildren<Hitbox>();
+
+        if (!hitbox)
+        {
+            Debug.LogError("AttackController: Hitbox reference missing.", this);
+            enabled = false;
+            return;
+        }
+
         hitbox.Owner = player;
     }
 

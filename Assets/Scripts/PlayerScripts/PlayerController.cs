@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerAnimation))]
 [RequireComponent(typeof(PlayerStateMachine))]
 public class PlayerController : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         if (!_Rb) _Rb = GetComponent<Rigidbody>();
+        if (!Animation) Animation = GetComponent<PlayerAnimation>();
         if (!State) State = GetComponent<PlayerStateMachine>();
     }
 
@@ -41,7 +43,8 @@ public class PlayerController : MonoBehaviour
             return;
 
         HandleHorizontalMovement();
-        Animation.UpdateLocomotion(_moveInputX, State.IsGrounded, State.IsBlocking);
+        if (Animation)
+            Animation.UpdateLocomotion(_moveInputX, State.IsGrounded, State.IsBlocking);
     }
 
     private void FixedUpdate()

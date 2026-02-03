@@ -12,8 +12,8 @@ public class PlayerHP : MonoBehaviour
     [SerializeField] private Image _healthBar;
     [SerializeField] private Color midHealth;
     [SerializeField] private Color lowHealth;
+    [SerializeField] private int maxHealth = 100;
 
-    private int maxHealth = 100;
     private int _currentHealth;
     private Color _fullColor;
 
@@ -30,6 +30,7 @@ public class PlayerHP : MonoBehaviour
 
     private void Start()
     {
+        maxHealth = Mathf.Max(1, maxHealth);
         _currentHealth = maxHealth;
 
         if (_healthBar)

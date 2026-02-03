@@ -17,6 +17,13 @@ public class Hitbox : MonoBehaviour
         if (!active)
             return;
 
+        if (!Owner)
+            return;
+
+        if (!AttackData)
+            return;
+
+
         if (!other.TryGetComponent<Hurtbox>(out var hurtbox))
             return;
 
@@ -25,6 +32,9 @@ public class Hitbox : MonoBehaviour
 
         // BLOCK CHECK
         if (hurtbox.Owner.State.IsBlocking && IsFacingAttacker(hurtbox.Owner))
+            return;
+
+        if (!Owner.AttackController)
             return;
 
         // Apply hit through attack controller

@@ -46,15 +46,15 @@ public class AttackController : MonoBehaviour
 
         target.Owner.HP.DealDamage(attack.damage, player, attack.knockbackForce, isUlt);
 
-        if (attack != null && attack.hitstun > 0f)
-            StartCoroutine(ApplyHitstun(target.Owner, attack.hitstun));
+        //if (attack != null && attack.hitstun > 0f)
+        //    StartCoroutine(ApplyHitstun(target.Owner, attack.hitstun));
 
         hasHit = true;
     }
-    private IEnumerator ApplyHitstun(PlayerController target, float duration)
-    {
-        target.EnterHitstun();
-        yield return new WaitForSeconds(duration);
-        target.ExitHitstun();
-    }
+    //private IEnumerator ApplyHitstun(PlayerController target, float duration)
+    //{
+    //    target.EnterHitstun();
+    //    yield return new WaitForSeconds(duration);
+    //    target.ExitHitstun();
+    //}
 }

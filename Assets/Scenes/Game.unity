@@ -2098,6 +2098,11 @@ PrefabInstance:
       propertyPath: _PlayerController
       value: 
       objectReference: {fileID: 1080917448}
+    - target: {fileID: 2246285343937770556, guid: 1fdf49ebfd58fc14cbcc44ed92db5f3d,
+        type: 3}
+      propertyPath: doubleJumpForce
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6879780389244126677, guid: 1fdf49ebfd58fc14cbcc44ed92db5f3d,
         type: 3}
       propertyPath: m_LocalPosition.x

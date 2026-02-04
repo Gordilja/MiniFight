@@ -16,9 +16,9 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsAlive => Life == LifeState.Alive;
     public bool IsGrounded => Loco == LocomotionState.Grounded;
 
-    public bool CanMove => IsAlive && Action == ActionState.Normal && !IsBlocking;
+    public bool CanMove => IsAlive && Action != ActionState.Hitstun;
     public bool CanAttack => IsAlive && Action == ActionState.Normal && !IsBlocking;
-    public bool CanJump => IsAlive && Action == ActionState.Normal && !IsBlocking;
+    public bool CanJump => IsAlive && Action != ActionState.Hitstun;
 
     // Optional: expose for debugging in inspector
     [SerializeField] private bool debugLogTransitions = false;
@@ -58,9 +58,6 @@ public class PlayerStateMachine : MonoBehaviour
 
         Loco = state;
         if (debugLogTransitions) Debug.Log($"[State] Loco -> {Loco}", this);
-
-        if (Loco == LocomotionState.Grounded)
-            CanDoubleJump = false;
     }
 
     public void SetGrounded(bool grounded)

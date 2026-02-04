@@ -103,19 +103,16 @@ public class PlayerController : MonoBehaviour
     public void SetBlockInput(bool pressed)
     {
         State.SetBlocking(pressed);
-
-        // If block is pressed, stop drift
-        if (State.IsBlocking)
-            _moveInputX = 0f;
     }
 
     public void OnJumpInput()
     {
-        if (!State.CanJump)
-            return;
-
         if (State.IsGrounded)
         {
+            if (!State.CanJump)
+                return;
+
+            Debug.Log("Jump");
             var velocity = _Rb.linearVelocity;
             velocity.y = 0f;
             _Rb.linearVelocity = velocity;
@@ -124,8 +121,12 @@ public class PlayerController : MonoBehaviour
             State.SetLocomotion(PlayerStateMachine.LocomotionState.Rising);
             State.AllowDoubleJump(true);
         }
-        else if (State.CanDoubleJump)
+        else
         {
+            if (!State.CanDoubleJump)
+                return;
+
+            Debug.Log("Double Jump!");
             var velocity = _Rb.linearVelocity;
             velocity.y = 0f;
             _Rb.linearVelocity = velocity;

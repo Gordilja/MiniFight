@@ -45,6 +45,9 @@ public class PlayerHP : MonoBehaviour
         if (!_controller.State.IsAlive)
             return;
 
+        if (_controller.State.IsBlocking && !isUlt)
+            return;
+
         if (_bloodEffect) _bloodEffect.Play();
 
         _currentHealth = Mathf.Max(0, _currentHealth - dmg);

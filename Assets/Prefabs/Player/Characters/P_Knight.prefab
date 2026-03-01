@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: _PlayerController
       value: 
       objectReference: {fileID: 2246285343937770556}
+    - target: {fileID: 3143673840342457013, guid: 71d07ebad20bbfa428bbf2a6dff0e051,
+        type: 3}
+      propertyPath: SortKey
+      value: 2611875730
+      objectReference: {fileID: 0}
     - target: {fileID: 3379374983571384559, guid: 71d07ebad20bbfa428bbf2a6dff0e051,
         type: 3}
       propertyPath: Sword

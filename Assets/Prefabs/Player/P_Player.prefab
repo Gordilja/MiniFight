@@ -2237,6 +2237,8 @@ GameObject:
   - component: {fileID: 2545578908836676309}
   - component: {fileID: 2249529509575751058}
   - component: {fileID: 888845857009698142}
+  - component: {fileID: 2746556548251663790}
+  - component: {fileID: 3143673840342457013}
   m_Layer: 6
   m_Name: P_Player
   m_TagString: Untagged
@@ -2336,6 +2338,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugLogTransitions: 0
+--- !u!114 &2746556548251663790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130939062836536552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718791b0c9f32f143a7921d7ab969adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerController: {fileID: 0}
+  _Anim: {fileID: 0}
+--- !u!114 &3143673840342457013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130939062836536552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2441318793
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &4141116749181382968
 GameObject:
   m_ObjectHideFlags: 0
@@ -6168,6 +6202,7 @@ MonoBehaviour:
   _healthBar: {fileID: 0}
   midHealth: {r: 0.7735849, g: 0.52049077, b: 0.18609823, a: 1}
   lowHealth: {r: 0.7075472, g: 0.16353686, b: 0.16353686, a: 1}
+  maxHealth: 100
 --- !u!1 &8866010718302061804
 GameObject:
   m_ObjectHideFlags: 0

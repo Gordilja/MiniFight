@@ -28,6 +28,11 @@ PrefabInstance:
       propertyPath: _Player
       value: 
       objectReference: {fileID: 6350263886370136996}
+    - target: {fileID: 3143673840342457013, guid: 71d07ebad20bbfa428bbf2a6dff0e051,
+        type: 3}
+      propertyPath: SortKey
+      value: 842217809
+      objectReference: {fileID: 0}
     - target: {fileID: 4130939062836536552, guid: 71d07ebad20bbfa428bbf2a6dff0e051,
         type: 3}
       propertyPath: m_Name
